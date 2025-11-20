@@ -1,0 +1,314 @@
+/* Global Resets & Variables */
+:root {
+  /* Mood Board Palette */
+  --color-olive: #556B2F;
+  --color-gold: #C5A059;
+  --color-marble: #FDFCF5;
+  --color-parchment: #F0EFE9;
+  --color-terracotta: #C06C55;
+  --color-charcoal: #2C3E50;
+  --color-text-light: #ffffff;
+  
+  --font-main: 'Georgia', 'Times New Roman', Times, serif;
+  --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  font-family: var(--font-main);
+  background-color: var(--color-marble);
+  color: var(--color-charcoal);
+}
+
+/* App Layout */
+.app-container {
+  display: grid;
+  height: 100vh;
+  /* Slide-out animation for the menu */
+  transition: grid-template-columns 0.3s ease-in-out;
+}
+
+/* Sidebar Open: Menu width + Chat width */
+.app-container.history-open {
+  grid-template-columns: 280px 1fr;
+}
+
+/* Sidebar Closed: 0px width (Hidden) + Chat width */
+.app-container.history-closed {
+  grid-template-columns: 0px 1fr;
+}
+
+/* --- Hamburger Menu (Left Sidebar) --- */
+.chat-history {
+  background-color: var(--color-parchment);
+  border-right: 1px solid #d1d1d1; 
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; 
+  white-space: nowrap; 
+}
+
+.menu-content {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 280px; /* Prevents layout shift during transition */
+}
+
+.menu-header {
+  margin-bottom: 30px;
+  border-bottom: 2px solid var(--color-gold);
+  padding-bottom: 10px;
+}
+
+.menu-header h3 {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--color-olive);
+  margin-bottom: 5px;
+}
+
+/* Action Buttons in Menu */
+.menu-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.menu-btn {
+  background-color: transparent;
+  border: 1px solid var(--color-olive);
+  color: var(--color-olive);
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s;
+}
+
+.menu-btn:hover {
+  background-color: var(--color-olive);
+  color: var(--color-text-light);
+}
+
+/* History List */
+.history-section {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.history-list {
+  list-style: none;
+}
+
+.history-list li {
+  padding: 12px 10px;
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.history-list li:hover {
+  background-color: rgba(85, 107, 47, 0.1);
+  color: var(--color-olive);
+}
+
+/* Bottom Settings Section */
+.menu-footer {
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.footer-link {
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 10px;
+  color: #666;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+}
+
+.footer-link:hover {
+  color: var(--color-olive);
+  text-decoration: underline;
+}
+
+/* --- Chat Window --- */
+.chat-window {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--color-marble);
+  position: relative;
+}
+
+/* Header Styling for Centered Logo */
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 130px; /* Tall header to fit the large logo */
+  padding: 0 30px;
+  background-color: #fff;
+  border-bottom: 1px solid var(--color-gold);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  flex-shrink: 0;
+  position: relative; /* Needed for absolute centering of logo */
+}
+
+/* Hamburger Button */
+.hamburger-btn {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: var(--color-olive);
+  padding: 5px;
+  z-index: 10; /* Ensure it stays clickable */
+}
+
+/* Brand Container - Absolutely Centered */
+.brand-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); /* Perfect center alignment */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-logo {
+  height: 100px; /* Approx twice the size of standard icons */
+  width: auto;
+  object-fit: contain;
+}
+
+/* Login Icon */
+.login-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  z-index: 10;
+  font-size: 1.2rem;
+}
+
+.login-icon:hover {
+  background-color: var(--color-gold);
+  color: white;
+}
+
+/* Messages */
+.message-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.message {
+  padding: 18px 28px;
+  border-radius: 8px;
+  max-width: 70%;
+  line-height: 1.7;
+  font-size: 1.1rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.message pre {
+  white-space: pre-wrap; 
+  word-wrap: break-word; 
+  font-family: var(--font-main);
+}
+
+.message.ai {
+  background-color: #fff;
+  border-left: 5px solid var(--color-olive);
+  color: #333;
+  align-self: flex-start;
+}
+
+.message.user {
+  background-color: var(--color-terracotta);
+  color: var(--color-text-light);
+  align-self: flex-end;
+  border-bottom-right-radius: 2px;
+}
+
+/* Input Area */
+.chat-input-area {
+  display: flex;
+  padding: 30px;
+  background-color: transparent;
+  gap: 15px;
+  flex-shrink: 0;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.chat-input-area input {
+  flex-grow: 1;
+  border: 1px solid #ccc;
+  border-radius: 4px; 
+  padding: 15px 20px;
+  font-family: var(--font-main);
+  font-size: 1.1rem;
+  background-color: #fff;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.chat-input-area input:focus {
+  outline: none;
+  border-color: var(--color-olive);
+  box-shadow: 0 0 0 2px rgba(85, 107, 47, 0.2);
+}
+
+.send-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: 4px;
+  border: none;
+  background-color: var(--color-olive);
+  color: white;
+  font-size: 1.6rem;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s;
+}
+
+.send-btn:hover {
+  background-color: #3e4f22;
+}
