@@ -1,53 +1,36 @@
 import React from 'react';
 
-/**
- * A component to display chat history and session controls.
- * @param {object} props
- * @param {boolean} props.isHistoryOpen - Controls the visibility of the panel content.
- * @param {function} props.toggleHistory - Callback function to toggle the panel.
- * @param {function} props.onNewChat - Callback function to reset the chat.
- */
-function ChatHistory({ isHistoryOpen, toggleHistory, onNewChat }) {
+function ChatHistory({ isHistoryOpen, onNewChat }) {
   return (
-    <div className="chat-history">
-      <div className="history-header">
-        {/* Conditionally render the title only when the panel is open */}
-        {isHistoryOpen && <h3>Previous chat history</h3>}
-        
-        {/* Container for all control buttons */}
-        <div className="history-controls">
-          {/* Conditionally render the "New Chat" button */}
-          {isHistoryOpen && (
-            <button 
-              onClick={onNewChat} 
-              title="New Chat" 
-              aria-label="Start a new chat"
-            >
-              +
-            </button>
-          )}
-          
-          {/* Toggles the panel open/closed */}
-          <button 
-            onClick={toggleHistory} 
-            title="Toggle chat history"
-            aria-label="Toggle chat history panel"
-          >
-            {isHistoryOpen ? '←' : '→'}
+    <aside className="chat-history" aria-hidden={!isHistoryOpen}>
+      <div className="menu-content">
+        <div className="menu-header">
+          <h3>Menu</h3>
+        </div>
+
+        <div className="menu-actions">
+          <button className="menu-btn" onClick={onNewChat}>
+            <span>+</span> Start New Inquiry
           </button>
         </div>
-      </div>
 
-      {/* Conditionally render the chat list */}
-      {isHistoryOpen && (
-        <ul className="history-list">
-          {/* These are static placeholders for UI demonstration */}
-          <li>What is justice?</li>
-          <li>On Virtue</li>
-          <li>The Allegory of the Cave</li>
-        </ul>
-      )}
-    </div>
+        <div className="history-section">
+          <div className="menu-header">
+             <h3>Previous Inquiries</h3>
+          </div>
+          <ul className="history-list">
+            <li>What is justice?</li>
+            <li>On Virtue</li>
+            <li>The Allegory of the Cave</li>
+          </ul>
+        </div>
+
+        <div className="menu-footer">
+          <button className="footer-link">⚙️ Settings</button>
+          <button className="footer-link">? Help & Documentation</button>
+        </div>
+      </div>
+    </aside>
   );
 }
 

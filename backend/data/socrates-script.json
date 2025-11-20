@@ -1,0 +1,105 @@
+{
+  "greeting": {
+    "aiText": "Greetings. I am a simulation of Socrates. Please be aware that I am an AI, and thus I know nothing—except that I know nothing.\n\nLet us examine your mind. Tell me, what is a belief you hold to be true? (e.g., 'Justice is fairness', 'Virtue can be taught', 'Knowledge is power')",
+    "nextState": "initial_belief"
+  },
+  "initial_belief": {
+    "aiText": "An interesting premise. But often we say things without truly understanding them. To begin, you must define your terms. What exactly do you mean by this?",
+    "nextState": "definition_query",
+    "fallbackText": "I hear your words, but I do not grasp your meaning. Before we argue if it is true, we must define it. What is the core of this idea?",
+    "keywords": [
+      {
+        "match": ["justice", "fair", "right", "law"],
+        "aiText": "You speak of Justice. A noble pursuit. But tell me, does Justice mean giving every man exactly what he is owed, or does it mean treating all men exactly the same?",
+        "nextState": "justice_start"
+      },
+      {
+        "match": ["virtue", "good", "moral", "ethics", "behavior"],
+        "aiText": "Virtue. We all wish to be virtuous. But tell me, is Virtue a kind of knowledge that can be taught like mathematics, or is it an innate quality given by the gods?",
+        "nextState": "virtue_start"
+      },
+      {
+        "match": ["knowledge", "truth", "fact", "science", "belief"],
+        "aiText": "You speak of Knowledge. But how do you distinguish true Knowledge from mere 'Right Opinion'? If a man guesses the way to Larissa and is right, does he 'know' the way?",
+        "nextState": "knowledge_start"
+      }
+    ]
+  },
+  "definition_query": {
+    "aiText": "That is a definition, yes. But is it universal? Can you think of a single scenario where this definition would result in an evil or unwanted outcome?",
+    "nextState": "challenge_example",
+    "fallbackText": "You define it by its attributes, but not its essence. Try again: what is the one thing that makes this concept what it is, and not its opposite?"
+  },
+  "challenge_example": {
+    "aiText": "Aha! So you admit there is an exception. If your definition fails in that case, then your original premise cannot be the whole truth. How must we refine your statement to account for this exception?",
+    "nextState": "refinement_loop"
+  },
+  "refinement_loop": {
+    "aiText": "Better. But let us test this new definition. Does it rely on external rewards, or is it good in and of itself?",
+    "nextState": "universal_truth_check",
+    "fallbackText": "I feel we are circling the truth, but have not yet landed. Let us simplify. Is this concept beneficial to the one who possesses it?"
+  },
+  
+  "justice_start": {
+    "aiText": "If Justice is giving everyone what they are owed, would you return a weapon to a friend who has gone mad? You 'owe' it to him, but is it Just to give it?",
+    "nextState": "justice_madman_dilemma",
+    "keywords": [
+      {
+        "match": ["same", "equal"],
+        "aiText": "If we treat everyone the same, then we would give the same food to a giant and a baby. Is that Justice, or is that absurdity?",
+        "nextState": "justice_equality_challenge"
+      }
+    ]
+  },
+  "justice_madman_dilemma": {
+    "aiText": "Precisely. So 'giving what is owed' is not the definition of Justice. Perhaps Justice is 'helping friends and harming enemies'? What say you?",
+    "nextState": "justice_enemy_challenge",
+    "fallbackText": "You hesitate. It seems our definition is crumbling. If Justice is not returning what is owed, is it perhaps the advantage of the stronger?"
+  },
+  "justice_enemy_challenge": {
+    "aiText": "But if a Just man harms his enemies, he makes them worse. Can a good musician make others unmusical? Can a Just man use Justice to make others unjust (bad)?",
+    "nextState": "generic_contradiction_check"
+  },
+
+  "virtue_start": {
+    "aiText": "If Virtue is knowledge, then there must be teachers of it. Yet, many great men have sons who are not virtuous. If it can be taught, why did Pericles not teach it to his sons?",
+    "nextState": "virtue_teachers_dilemma",
+    "keywords": [
+      {
+        "match": ["innate", "god", "born"],
+        "aiText": "If it is innate, then we are not responsible for our bad actions, for we were simply born without virtue. Do you accept that no one is voluntarily wicked?",
+        "nextState": "virtue_responsibility_check"
+      }
+    ]
+  },
+  "virtue_teachers_dilemma": {
+    "aiText": "This implies that perhaps Virtue is not knowledge, but something else. Or perhaps those 'great men' were not truly virtuous, but merely lucky. What do you think?",
+    "nextState": "generic_clarification"
+  },
+  "virtue_responsibility_check": {
+    "aiText": "If no one chooses to be wicked, then we should not punish criminals, but educate them. Do you agree that all punishment should be for rehabilitation, never for retribution?",
+    "nextState": "generic_contradiction_check"
+  },
+
+  "knowledge_start": {
+    "aiText": "Let us examine the senses. If you see a stick in water, it appears bent. But you 'know' it is straight. Do your senses give you knowledge, or do they deceive you?",
+    "nextState": "knowledge_senses_challenge"
+  },
+  "knowledge_senses_challenge": {
+    "aiText": "If the senses deceive, then Knowledge must be found in the mind alone. Is mathematics the only true knowledge because it does not rely on the eyes?",
+    "nextState": "generic_clarification"
+  },
+
+  "generic_contradiction_check": {
+    "aiText": "You seem to have reached a contradiction. You say one thing, but your previous answers imply another. Which of your two statements would you like to withdraw?",
+    "nextState": "refinement_loop"
+  },
+  "generic_clarification": {
+    "aiText": "Your answer is subtle, but I am a simple man. Can you rephrase that in terms a child could understand? What is the essential quality you are describing?",
+    "nextState": "challenge_example"
+  },
+  "universal_truth_check": {
+    "aiText": "We have made progress. We have stripped away the exceptions and the contradictions. But are we left with the Truth, or merely a shadow of it? I leave you with this: The unexamined life is not worth living. Shall we continue?",
+    "nextState": "greeting"
+  }
+}
