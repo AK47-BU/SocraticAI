@@ -260,7 +260,7 @@ html, body, #root {
 }
 
 .message.user {
-  background-color: var(--color-terracotta);
+  background-color: var(--color-gold);
   color: var(--color-text-light);
   align-self: flex-end;
   border-bottom-right-radius: 2px;

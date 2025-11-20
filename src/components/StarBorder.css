@@ -1,0 +1,73 @@
+.star-border-container {
+  display: inline-block;
+  position: relative;
+  border-radius: 500px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  padding: 5;
+  cursor: pointer;
+}
+
+.border-gradient-bottom {
+  position: absolute;
+  width: 300%;
+  height: 150%;
+  opacity: 2.5;
+  bottom: -50px;
+  right: -250%;
+  border-radius: 400%;
+  animation: star-movement-bottom linear infinite alternate;
+  z-index: 0;
+}
+
+.border-gradient-top {
+  position: absolute;
+  opacity: 2.5;
+  width: 300%;
+  height: 150%;
+  top: -50px;
+  left: -250%;
+  border-radius: 400%;
+  animation: star-movement-top linear infinite alternate;
+  z-index: 0;
+}
+
+.inner-content {
+  position: relative;
+  background: #556B2F; /* Olive Background */
+  /* REMOVED: Static border to let the animated border show through */
+  color: #FDFCF5; /* Marble Text */
+  font-size: 16px;
+  text-align: center;
+  padding: 16px 36px;
+  border-radius: 18px; /* Slightly smaller than container to fit nicely */
+  z-index: 1;
+  transition: background 0.3s;
+}
+
+.star-border-container:hover .inner-content {
+    background: olive; /* Darker olive on hover */
+}
+
+@keyframes star-movement-bottom {
+  0% {
+    transform: translate(0%, 0%);
+    opacity: 5;
+  }
+  100% {
+    transform: translate(-100%, 0%);
+    opacity: 2;
+  }
+}
+
+@keyframes star-movement-top {
+  0% {
+    transform: translate(0%, 0%);
+    opacity: 5;
+  }
+  100% {
+    transform: translate(100%, 0%);
+    opacity: 2;
+  }
+}

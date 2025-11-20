@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 // Importing the logo image. 
-import logoImage from '../assets/SocraticAILogo.jpeg'; 
+import logoImage from '../assets/SocraticAILogo.png'; 
 
 /**
  * The main chat interface.
