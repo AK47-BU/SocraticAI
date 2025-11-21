@@ -2,6 +2,7 @@ import { useState } from 'react';
 import ChatHistory from './components/ChatHistory';
 import ChatWindow from './components/ChatWindow';
 import SplashScreen from './components/SplashScreen';
+import HelpModal from "./components/HelpModal";
 
 const INITIAL_MESSAGE = {
   id: 1,
@@ -16,6 +17,7 @@ function App() {
   // Menu state
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [messages, setMessages] = useState([INITIAL_MESSAGE]);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
 
   const handleEnterApp = () => {
     setShowSplash(false);
@@ -59,13 +61,18 @@ function App() {
     <div className={`app-container ${isHistoryOpen ? 'history-open' : 'history-closed'}`}>
       <ChatHistory 
         isHistoryOpen={isHistoryOpen} 
-        onNewChat={handleNewChat} 
+        onNewChat={handleNewChat}
+        onOpenHelp={() => setIsHelpOpen(true)} 
       />
       <ChatWindow 
         messages={messages} 
         onSendMessage={handleSendMessage}
-        toggleHistory={toggleHistory} 
+        toggleHistory={toggleHistory}    
       />
+      {/* 4. Render the Modal if state is true */}
+      {isHelpOpen && (
+        <HelpModal onClose={() => setIsHelpOpen(false)} />
+        )}
     </div>
   );
 }

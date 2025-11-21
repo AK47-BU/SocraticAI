@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ChatHistory({ isHistoryOpen, onNewChat }) {
+function ChatHistory({ isHistoryOpen, onNewChat, onOpenHelp }) {
   return (
     <aside className="chat-history" aria-hidden={!isHistoryOpen}>
       <div className="menu-content">
@@ -27,7 +27,12 @@ function ChatHistory({ isHistoryOpen, onNewChat }) {
 
         <div className="menu-footer">
           <button className="footer-link">⚙️ Settings</button>
-          <button className="footer-link">? Help & Documentation</button>
+          <button 
+            className="footer-link" 
+            onClick={onOpenHelp}
+          >
+            Help 
+          </button>
         </div>
       </div>
     </aside>

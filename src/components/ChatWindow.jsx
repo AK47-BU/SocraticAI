@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-// Importing the logo image. 
+import socratesAvatar from '../assets/SocratesIMG.jpg';
 import logoImage from '../assets/SocraticAILogo.png'; 
 
 /**
@@ -36,7 +36,7 @@ function ChatWindow({ messages, onSendMessage, toggleHistory }) {
   return (
     <main className="chat-window">
       <header className="chat-header">
-        {/* Hamburger Menu Button on the Left */}
+        {/* Hamburger Menu Button */}
         <button 
           className="hamburger-btn" 
           onClick={toggleHistory}
@@ -45,7 +45,7 @@ function ChatWindow({ messages, onSendMessage, toggleHistory }) {
           ☰
         </button>
 
-        {/* Centered Logo - Text Heading Removed */}
+        
         <div className="brand-container">
           <img src={logoImage} alt="Socratic AI Logo" className="app-logo" />
         </div>
@@ -65,7 +65,17 @@ function ChatWindow({ messages, onSendMessage, toggleHistory }) {
             key={message.id} 
             className={`message ${message.sender}`}
           >
-            <pre>{message.text}</pre>
+              {message.sender === 'ai' && (
+              <img 
+                src={socratesAvatar} 
+                alt="Socrates" 
+                className="socrates-icon" 
+              />
+            )}
+            
+            <div className={`messageai ${message.sender}`}>
+              <pre>{message.text}</pre>
+            </div>
           </div>
         ))}
       </div>
