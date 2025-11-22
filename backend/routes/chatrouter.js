@@ -1,4 +1,4 @@
-JavaScript
+
 import express from 'express';
 import { generateSocraticResponse } from '../logic/chatLogic.js';
 
