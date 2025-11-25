@@ -6,7 +6,8 @@ function ChatHistory({
   onOpenHelp, 
   onOpenSettings, 
   history, 
-  onLoadChat 
+  onLoadChat,
+  activeChatId // <--- Receive the prop
 }) {
   return (
     <aside className="chat-history" aria-hidden={!isHistoryOpen}>
@@ -30,10 +31,15 @@ function ChatHistory({
               <li style={{ fontStyle: 'italic', cursor: 'default' }}>No records yet...</li>
             ) : (
               history.map((chat) => (
-                <li key={chat.id} onClick={() => onLoadChat(chat)}>
+                <li 
+                  key={chat.id} 
+                  onClick={() => onLoadChat(chat)}
+                  // ADD THIS CLASS LOGIC
+                  className={chat.id === activeChatId ? 'active' : ''}
+                >
                   {chat.title || "Untitled Inquiry"} 
                   <br/>
-                  <small style={{ fontSize: '0.7em', color: '#999' }}>
+                  <small style={{ fontSize: '0.7em', opacity: 0.7 }}>
                     {new Date(chat.date).toLocaleDateString()}
                   </small>
                 </li>

@@ -23,6 +23,22 @@ function App() {
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [user, setUser] = useState(null);
 
+  // --- Settings State ---
+  const [theme, setTheme] = useState(localStorage.getItem('socratic_theme') || 'light');
+  const [textSize, setTextSize] = useState(localStorage.getItem('socratic_text_size') || 'normal');
+
+  // Apply Settings to DOM
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('socratic_theme', theme);
+  }, [theme]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-text-size', textSize);
+    localStorage.setItem('socratic_text_size', textSize);
+  }, [textSize]);
+
+
   // --- Chat Logic State ---
   const [messages, setMessages] = useState([INITIAL_MESSAGE]);
   const [conversationId, setConversationId] = useState(generateId());
@@ -35,11 +51,9 @@ function App() {
   });
 
   // --- Handlers ---
-
   const handleEnterApp = () => setShowSplash(false);
   const toggleHistory = () => setIsHistoryOpen(!isHistoryOpen);
 
-  // Helper to save current chat before switching
   const saveCurrentChat = () => {
     // Only save if there is real interaction (more than 1 message)
     if (messages.length > 1) {
@@ -53,7 +67,10 @@ function App() {
         messages: messages
       };
 
-      const updatedHistory = [newHistoryItem, ...chatHistory];
+      // Filter out the chat with the same ID before adding the updated version
+      const otherChats = chatHistory.filter(chat => chat.id !== conversationId);
+      const updatedHistory = [newHistoryItem, ...otherChats];
+      
       setChatHistory(updatedHistory);
       localStorage.setItem('socratic_history', JSON.stringify(updatedHistory));
     }
@@ -68,7 +85,7 @@ function App() {
   }, [messages, chatHistory, conversationId]);
 
   const handleLoadChat = (savedChat) => {
-    saveCurrentChat(); // Save the one we are leaving
+    saveCurrentChat(); 
     setConversationId(savedChat.id);
     setMessages(savedChat.messages);
     if (window.innerWidth < 768) setIsHistoryOpen(false);
@@ -118,6 +135,7 @@ function App() {
         onOpenSettings={() => setActiveModal('settings')}
         history={chatHistory}
         onLoadChat={handleLoadChat}
+        activeChatId={conversationId}
       />
 
       <ChatWindow 
@@ -129,18 +147,27 @@ function App() {
         isLoading={isLoading} 
       />
 
-      {/* Modals */}
+      {/* --- MODALS SECTION --- */}
+      
       {activeModal === 'help' && (
         <HelpModal onClose={() => setActiveModal(null)} />
       )}
+
       {activeModal === 'login' && (
         <LoginModal 
           onClose={() => setActiveModal(null)} 
           onLogin={setUser} 
         />
       )}
+      
       {activeModal === 'settings' && (
-        <SettingsModal onClose={() => setActiveModal(null)} />
+        <SettingsModal 
+          onClose={() => setActiveModal(null)}
+          theme={theme}
+          setTheme={setTheme}
+          textSize={textSize}
+          setTextSize={setTextSize}
+        />
       )}
       
     </div>
