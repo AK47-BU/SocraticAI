@@ -1,15 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import socratesAvatar from '../assets/SocratesIMG.jpg';
-import logoImage from '../assets/SocraticAILogo.png'; 
+import socratesAvatar from '../Assets/SocratesIMG.jpg';
+import logoImage from '../Assets/SocraticAILogo.png'; 
 
-/**
- * The main chat interface.
- * @param {object} props
- * @param {Array} props.messages - Chat messages.
- * @param {function} props.onSendMessage - Send handler.
- * @param {function} props.toggleHistory - Handler to toggle the side menu.
- */
-function ChatWindow({ messages, onSendMessage, toggleHistory }) {
+function ChatWindow({ messages, onSendMessage, toggleHistory, onLoginClick, user }) {
   const [inputValue, setInputValue] = useState('');
   const messageListRef = useRef(null);
 
@@ -36,7 +29,6 @@ function ChatWindow({ messages, onSendMessage, toggleHistory }) {
   return (
     <main className="chat-window">
       <header className="chat-header">
-        {/* Hamburger Menu Button */}
         <button 
           className="hamburger-btn" 
           onClick={toggleHistory}
@@ -45,18 +37,30 @@ function ChatWindow({ messages, onSendMessage, toggleHistory }) {
           ☰
         </button>
 
-        
         <div className="brand-container">
           <img src={logoImage} alt="Socratic AI Logo" className="app-logo" />
         </div>
         
-        <div 
+        <button 
           className="login-icon" 
-          title="Login/Sign up" 
-          aria-label="Login or Sign up"
+          onClick={onLoginClick}
+          title={user ? `Signed in as ${user.name}` : "Login"}
+          aria-label="Login"
+          style={{ 
+            background: user ? 'var(--color-olive)' : 'transparent',
+            color: user ? 'white' : 'var(--color-gold)',
+            fontSize: user ? '1rem' : '1.2rem',
+            width: '40px',
+            height: '40px',
+            borderRadius: '50%',
+            border: '1px solid var(--color-gold)',
+            cursor: 'pointer',
+            display: 'grid',
+            placeItems: 'center'
+          }} 
         >
-          👤
-        </div>
+          {user ? user.name.charAt(0).toUpperCase() : '👤'}
+        </button>
       </header>
       
       <div className="message-list" ref={messageListRef}>
@@ -65,7 +69,7 @@ function ChatWindow({ messages, onSendMessage, toggleHistory }) {
             key={message.id} 
             className={`message ${message.sender}`}
           >
-              {message.sender === 'ai' && (
+            {message.sender === 'ai' && (
               <img 
                 src={socratesAvatar} 
                 alt="Socrates" 
@@ -73,7 +77,7 @@ function ChatWindow({ messages, onSendMessage, toggleHistory }) {
               />
             )}
             
-            <div className={`messageai ${message.sender}`}>
+            <div className={`message-text ${message.sender}`}>
               <pre>{message.text}</pre>
             </div>
           </div>

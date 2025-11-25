@@ -1,6 +1,13 @@
 import React from 'react';
 
-function ChatHistory({ isHistoryOpen, onNewChat, onOpenHelp }) {
+function ChatHistory({ 
+  isHistoryOpen, 
+  onNewChat, 
+  onOpenHelp, 
+  onOpenSettings, 
+  history, 
+  onLoadChat 
+}) {
   return (
     <aside className="chat-history" aria-hidden={!isHistoryOpen}>
       <div className="menu-content">
@@ -19,18 +26,27 @@ function ChatHistory({ isHistoryOpen, onNewChat, onOpenHelp }) {
              <h3>Previous Inquiries</h3>
           </div>
           <ul className="history-list">
-            <li>What is justice?</li>
-            <li>On Virtue</li>
-            <li>The Allegory of the Cave</li>
+            {history.length === 0 ? (
+              <li style={{ fontStyle: 'italic', cursor: 'default' }}>No records yet...</li>
+            ) : (
+              history.map((chat) => (
+                <li key={chat.id} onClick={() => onLoadChat(chat)}>
+                  {chat.title || "Untitled Inquiry"} 
+                  <br/>
+                  <small style={{ fontSize: '0.7em', color: '#999' }}>
+                    {new Date(chat.date).toLocaleDateString()}
+                  </small>
+                </li>
+              ))
+            )}
           </ul>
         </div>
 
         <div className="menu-footer">
-          <button className="footer-link">⚙️ Settings</button>
-          <button 
-            className="footer-link" 
-            onClick={onOpenHelp}
-          >
+          <button className="footer-link" onClick={onOpenSettings}>
+            ⚙️ Settings
+          </button>
+          <button className="footer-link" onClick={onOpenHelp}>
             Help 
           </button>
         </div>
