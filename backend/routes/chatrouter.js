@@ -1,10 +1,9 @@
-
 import express from 'express';
-import { generateSocraticResponse } from '../logic/chatLogic.js';
+import { generateSocraticResponse } from '../logic/chatlogic.js'; 
 
 const router = express.Router();
 
-router.post('/chat', (req, res) => {
+router.post('/chat', async (req, res) => { // Added 'async' here
   const { userMessage, conversationId } = req.body; 
 
   if (!userMessage || !conversationId) {
@@ -12,12 +11,10 @@ router.post('/chat', (req, res) => {
   }
 
   try {
-    const response = generateSocraticResponse(conversationId, userMessage);
+    // Await the response from the logic function
+    const response = await generateSocraticResponse(conversationId, userMessage);
     
-    // Simulate thinking time
-    setTimeout(() => {
-      res.json(response); 
-    }, 500); 
+    res.json(response); 
 
   } catch (error) {
     console.error("API Error:", error);
