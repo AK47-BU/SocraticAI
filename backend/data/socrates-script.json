@@ -1,43 +1,60 @@
 {
   "greeting": {
-    "aiText": "Greetings. I am a simulation of Socrates. Please be aware that I am an AI, and thus I know nothing—except that I know nothing.\n\nLet us examine your mind. Tell me, what is a belief you hold to be true? (e.g., 'Justice is fairness', 'Virtue can be taught', 'Knowledge is power')",
+    "aiText": "Greetings. I am a simulation of Socrates. I know nothing—except that I know nothing.\n\nLet us examine your mind. State a belief you hold to be true (e.g., 'Justice is fairness', 'Virtue can be taught', 'Knowledge is power'), or simply say 'I am ready' to begin.",
     "nextState": "initial_belief"
   },
   "initial_belief": {
-    "aiText": "An interesting premise. But often we say things without truly understanding them. To begin, you must define your terms. What exactly do you mean by this?",
+    "aiText": "An interesting premise. But often we use words without weighing them. You must define your terms. What specifically do you mean by this?",
     "nextState": "definition_query",
-    "fallbackText": "I hear your words, but I do not grasp your meaning. Before we argue if it is true, we must define it. What is the core of this idea?",
+    "fallbackText": "I hear your words, but I do not grasp your essence. Before we determine truth, we must define terms. What is the core of this idea?",
     "keywords": [
       {
-        "match": ["justice", "fair", "right", "law"],
+        "match": ["justice", "fair", "fairness", "right", "law", "legal", "equality"],
         "aiText": "You speak of Justice. A noble pursuit. But tell me, does Justice mean giving every man exactly what he is owed, or does it mean treating all men exactly the same?",
         "nextState": "justice_start"
       },
       {
-        "match": ["virtue", "good", "moral", "ethics", "behavior"],
+        "match": ["virtue", "good", "moral", "ethics", "behavior", "right thing", "actions"],
         "aiText": "Virtue. We all wish to be virtuous. But tell me, is Virtue a kind of knowledge that can be taught like mathematics, or is it an innate quality given by the gods?",
         "nextState": "virtue_start"
       },
       {
-        "match": ["knowledge", "truth", "fact", "science", "belief"],
+        "match": ["knowledge", "truth", "fact", "science", "belief", "wisdom", "learning"],
         "aiText": "You speak of Knowledge. But how do you distinguish true Knowledge from mere 'Right Opinion'? If a man guesses the way to Larissa and is right, does he 'know' the way?",
         "nextState": "knowledge_start"
+      },
+      {
+        "match": ["dont know", "don't know", "not sure", "unsure", "maybe"],
+        "aiText": "To admit ignorance is the beginning of wisdom. Let us start simpler. Do you believe that it is better to suffer injustice than to commit it?",
+        "nextState": "justice_start"
       }
     ]
   },
   "definition_query": {
     "aiText": "That is a definition, yes. But is it universal? Can you think of a single scenario where this definition would result in an evil or unwanted outcome?",
     "nextState": "challenge_example",
-    "fallbackText": "You define it by its attributes, but not its essence. Try again: what is the one thing that makes this concept what it is, and not its opposite?"
+    "fallbackText": "You define it by its attributes, not its essence. Try again: what is the one thing that makes this concept what it is, and not its opposite?",
+    "keywords": [
+       {
+        "match": ["yes", "yeah", "definitely", "sure"],
+        "aiText": "You seem confident. But confidence is not truth. If a madman asks for his weapon back, and you define justice as 'returning what is owed', would you return it?",
+        "nextState": "justice_madman_dilemma"
+      },
+      {
+        "match": ["no", "nope", "doubt", "hard"],
+        "aiText": "You hesitate. Good. Doubt is the birth pang of truth. If you cannot define it perfectly, perhaps give me an example of it instead?",
+        "nextState": "challenge_example"
+      }
+    ]
   },
   "challenge_example": {
-    "aiText": "Aha! So you admit there is an exception. If your definition fails in that case, then your original premise cannot be the whole truth. How must we refine your statement to account for this exception?",
+    "aiText": "Aha! So you admit there might be an exception. If your definition fails in that case, then your original premise cannot be the whole truth. How must we refine your statement to account for this?",
     "nextState": "refinement_loop"
   },
   "refinement_loop": {
-    "aiText": "Better. But let us test this new definition. Does it rely on external rewards, or is it good in and of itself?",
+    "aiText": "Better. But let us test this new definition. Does this concept rely on external rewards (like money or praise), or is it good in and of itself?",
     "nextState": "universal_truth_check",
-    "fallbackText": "I feel we are circling the truth, but have not yet landed. Let us simplify. Is this concept beneficial to the one who possesses it?"
+    "fallbackText": "We are circling the truth. Let us simplify. Is this concept beneficial to the one who possesses it?"
   },
   
   "justice_start": {
@@ -45,20 +62,41 @@
     "nextState": "justice_madman_dilemma",
     "keywords": [
       {
-        "match": ["same", "equal"],
+        "match": ["same", "equal", "equality"],
         "aiText": "If we treat everyone the same, then we would give the same food to a giant and a baby. Is that Justice, or is that absurdity?",
         "nextState": "justice_equality_challenge"
+      },
+      {
+        "match": ["owed", "debt", "deserve"],
+        "aiText": "If enemies deserve harm, and justice is giving what is deserved, does a just man harm people? Does harming a horse make it better or worse?",
+        "nextState": "justice_enemy_challenge"
       }
     ]
   },
   "justice_madman_dilemma": {
-    "aiText": "Precisely. So 'giving what is owed' is not the definition of Justice. Perhaps Justice is 'helping friends and harming enemies'? What say you?",
+    "aiText": "Precisely. So 'giving what is owed' cannot be the definition of Justice. Perhaps Justice is 'helping friends and harming enemies'? What say you?",
     "nextState": "justice_enemy_challenge",
+    "keywords": [
+      {
+        "match": ["yes", "agree", "sure", "ok"],
+        "aiText": "Then we agree the first definition was flawed. Now, consider: is it the role of a Just man to do harm to anyone, even an enemy?",
+        "nextState": "justice_enemy_challenge"
+      },
+      {
+        "match": ["no", "disagree", "not sure"],
+        "aiText": "You disagree? Then tell me, is it Just to put a weapon in the hands of a madman who might hurt himself? Surely Justice implies doing good, not enabling harm?",
+        "nextState": "generic_clarification"
+      }
+    ],
     "fallbackText": "You hesitate. It seems our definition is crumbling. If Justice is not returning what is owed, is it perhaps the advantage of the stronger?"
   },
   "justice_enemy_challenge": {
-    "aiText": "But if a Just man harms his enemies, he makes them worse. Can a good musician make others unmusical? Can a Just man use Justice to make others unjust (bad)?",
+    "aiText": "But if a Just man harms his enemies, he makes them worse human beings. Can a musician use music to make people unmusical? Can a Just man use Justice to make others unjust?",
     "nextState": "generic_contradiction_check"
+  },
+  "justice_equality_challenge": {
+    "aiText": "So equality of outcome is impossible. Perhaps you mean equality of opportunity? But even then, do the weak not need more help than the strong?",
+    "nextState": "generic_clarification"
   },
 
   "virtue_start": {
@@ -66,9 +104,14 @@
     "nextState": "virtue_teachers_dilemma",
     "keywords": [
       {
-        "match": ["innate", "god", "born"],
+        "match": ["innate", "god", "born", "nature"],
         "aiText": "If it is innate, then we are not responsible for our bad actions, for we were simply born without virtue. Do you accept that no one is voluntarily wicked?",
         "nextState": "virtue_responsibility_check"
+      },
+      {
+        "match": ["taught", "teach", "learn", "school"],
+        "aiText": "If it can be taught, show me the teachers. Who is an expert in Virtue as a cobbler is an expert in shoes?",
+        "nextState": "virtue_teachers_dilemma"
       }
     ]
   },
@@ -78,7 +121,19 @@
   },
   "virtue_responsibility_check": {
     "aiText": "If no one chooses to be wicked, then we should not punish criminals, but educate them. Do you agree that all punishment should be for rehabilitation, never for retribution?",
-    "nextState": "generic_contradiction_check"
+    "nextState": "generic_contradiction_check",
+    "keywords": [
+      {
+        "match": ["yes", "agree", "rehab"],
+        "aiText": "Then our prisons are unjust, for they seek to harm rather than cure. You propose a radical kindness.",
+        "nextState": "universal_truth_check"
+      },
+      {
+        "match": ["no", "disagree", "punish"],
+        "aiText": "But if they were born without virtue (innate), how can you punish them for what they did not choose? That would be like punishing a man for being born short.",
+        "nextState": "generic_contradiction_check"
+      }
+    ]
   },
 
   "knowledge_start": {
@@ -87,7 +142,19 @@
   },
   "knowledge_senses_challenge": {
     "aiText": "If the senses deceive, then Knowledge must be found in the mind alone. Is mathematics the only true knowledge because it does not rely on the eyes?",
-    "nextState": "generic_clarification"
+    "nextState": "generic_clarification",
+    "keywords": [
+      {
+        "match": ["yes", "math", "mind"],
+        "aiText": "Then what of love, or beauty? We cannot calculate them, yet we feel we 'know' them. Are they illusions?",
+        "nextState": "universal_truth_check"
+      },
+      {
+        "match": ["no", "senses", "eyes"],
+        "aiText": "Then you trust your eyes? But I can show you a painting of a grape that birds try to eat. If birds are fooled, why not you?",
+        "nextState": "generic_contradiction_check"
+      }
+    ]
   },
 
   "generic_contradiction_check": {
