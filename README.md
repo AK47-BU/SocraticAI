@@ -48,8 +48,10 @@ The application is divided into two parts: the Backend (server) and the Frontend
 Navigate to the backend directory:
 
 
+
 cd backend
 Install dependencies:
+
 
 
 npm install
@@ -65,6 +67,7 @@ GROQ_API_KEY=your_groq_api_key_here
 Start the server:
 
 
+
 node server.js
 The server should start running on http://localhost:3001.
 
@@ -72,15 +75,22 @@ The server should start running on http://localhost:3001.
 Open a new terminal window and navigate to the project root (where the main package.json is located):
 
 
+
 cd socraticai
 
+
 Install dependencies:
+
+
 
 npm install
 Start the development server:
 
+
+
 npm run dev
 Open your browser and navigate to the local URL provided (usually http://localhost:5173).
+
 
 📖 How to Use
 Enter the Academy: Click the button on the splash screen to enter the main chat interface.
