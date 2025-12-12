@@ -122,6 +122,7 @@ socraticai/
 └── package.json         # Frontend dependencies
 
 👥 Authors (Group 4)
+
 Adam Kulik - Backend & Architecture
 
 Elliott Tompkins - Frontend & UI Design
