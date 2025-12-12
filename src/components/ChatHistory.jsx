@@ -39,7 +39,7 @@ function ChatHistory({
                 >
                   {chat.title || "Untitled Inquiry"} 
                   <br/>
-                  <small style={{ fontSize: '0.7em', opacity: 0.7 }}>
+                  <small style={{ fontSize: '0.7em', color: 'var(--color-text-sub)' }}>
                     {new Date(chat.date).toLocaleDateString()}
                   </small>
                 </li>

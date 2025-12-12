@@ -35,7 +35,7 @@
     "nextState": "challenge_example",
     "fallbackText": "You define it by its attributes, not its essence. Try again: what is the one thing that makes this concept what it is, and not its opposite?",
     "keywords": [
-       {
+      {
         "match": ["yes", "yeah", "definitely", "sure"],
         "aiText": "You seem confident. But confidence is not truth. If a madman asks for his weapon back, and you define justice as 'returning what is owed', would you return it?",
         "nextState": "justice_madman_dilemma"
@@ -49,14 +49,37 @@
   },
   "challenge_example": {
     "aiText": "Aha! So you admit there might be an exception. If your definition fails in that case, then your original premise cannot be the whole truth. How must we refine your statement to account for this?",
-    "nextState": "refinement_loop"
+    "nextState": "refinement_loop",
+    "keywords": [
+      {
+        "match": ["change", "refine", "modify", "add", "except", "unless"],
+        "aiText": "Your willingness to change your mind is a sign of a flexible intellect. Let us hear this new, refined definition.",
+        "nextState": "refinement_loop"
+      },
+      {
+        "match": ["don't know", "unsure", "confused", "hard"],
+        "aiText": "Do not despair. Confusion is the first step. Let us look for the common thread. Is there something that remains constant in all cases?",
+        "nextState": "generic_clarification"
+      }
+    ]
   },
   "refinement_loop": {
     "aiText": "Better. But let us test this new definition. Does this concept rely on external rewards (like money or praise), or is it good in and of itself?",
     "nextState": "universal_truth_check",
-    "fallbackText": "We are circling the truth. Let us simplify. Is this concept beneficial to the one who possesses it?"
+    "fallbackText": "We are circling the truth. Let us simplify. Is this concept beneficial to the one who possesses it?",
+    "keywords": [
+      {
+        "match": ["external", "money", "praise", "reward", "others"],
+        "aiText": "If it relies on others, then it is a slave to their opinion. Surely true Virtue/Justice must be free?",
+        "nextState": "generic_contradiction_check"
+      },
+      {
+        "match": ["itself", "internal", "good", "innate"],
+        "aiText": "Then it is like health—desirable even if no one knows you are healthy. You are approaching wisdom.",
+        "nextState": "universal_truth_check"
+      }
+    ]
   },
-  
   "justice_start": {
     "aiText": "If Justice is giving everyone what they are owed, would you return a weapon to a friend who has gone mad? You 'owe' it to him, but is it Just to give it?",
     "nextState": "justice_madman_dilemma",
@@ -92,13 +115,36 @@
   },
   "justice_enemy_challenge": {
     "aiText": "But if a Just man harms his enemies, he makes them worse human beings. Can a musician use music to make people unmusical? Can a Just man use Justice to make others unjust?",
-    "nextState": "generic_contradiction_check"
+    "nextState": "generic_contradiction_check",
+    "keywords": [
+      {
+        "match": ["no", "never", "impossible", "cannot"],
+        "aiText": "Then it is never the role of the Just man to harm anyone, friend or enemy. We have found a truth.",
+        "nextState": "universal_truth_check"
+      },
+      {
+        "match": ["yes", "can", "sometimes"],
+        "aiText": "That is a paradox. Heat cannot produce cold; drought cannot produce moisture. Goodness cannot produce badness. You must reconsider.",
+        "nextState": "refinement_loop"
+      }
+    ]
   },
   "justice_equality_challenge": {
     "aiText": "So equality of outcome is impossible. Perhaps you mean equality of opportunity? But even then, do the weak not need more help than the strong?",
-    "nextState": "generic_clarification"
+    "nextState": "generic_clarification",
+    "keywords": [
+      {
+        "match": ["yes", "help", "need", "more"],
+        "aiText": "Then Justice is not treating everyone the same, but treating them according to their need. You have corrected your own contradiction.",
+        "nextState": "universal_truth_check"
+      },
+      {
+        "match": ["no", "same", "equal"],
+        "aiText": "Then you would force a cripple to run a race against an athlete in the name of 'equality'? Is that Justice, or cruelty?",
+        "nextState": "generic_contradiction_check"
+      }
+    ]
   },
-
   "virtue_start": {
     "aiText": "If Virtue is knowledge, then there must be teachers of it. Yet, many great men have sons who are not virtuous. If it can be taught, why did Pericles not teach it to his sons?",
     "nextState": "virtue_teachers_dilemma",
@@ -117,7 +163,24 @@
   },
   "virtue_teachers_dilemma": {
     "aiText": "This implies that perhaps Virtue is not knowledge, but something else. Or perhaps those 'great men' were not truly virtuous, but merely lucky. What do you think?",
-    "nextState": "generic_clarification"
+    "nextState": "generic_clarification",
+    "keywords": [
+      {
+        "match": ["lucky", "luck", "chance", "gods"],
+        "aiText": "If it is luck, then we cannot control it. And if we cannot control it, can we be praised for it? A man is not praised for winning the lottery.",
+        "nextState": "universal_truth_check"
+      },
+      {
+        "match": ["something else", "practice", "habit", "soul"],
+        "aiText": "Something else... perhaps it is like a muscle that must be exercised? But even exercise requires a trainer.",
+        "nextState": "virtue_start"
+      },
+      {
+        "match": ["not sure", "don't know", "unsure"],
+        "aiText": "If you are unsure of the teachers, can you at least name a student who became virtuous because of them?",
+        "nextState": "generic_contradiction_check"
+      }
+    ]
   },
   "virtue_responsibility_check": {
     "aiText": "If no one chooses to be wicked, then we should not punish criminals, but educate them. Do you agree that all punishment should be for rehabilitation, never for retribution?",
@@ -135,10 +198,21 @@
       }
     ]
   },
-
   "knowledge_start": {
     "aiText": "Let us examine the senses. If you see a stick in water, it appears bent. But you 'know' it is straight. Do your senses give you knowledge, or do they deceive you?",
-    "nextState": "knowledge_senses_challenge"
+    "nextState": "knowledge_senses_challenge",
+    "keywords": [
+      {
+        "match": ["deceive", "trick", "lie", "false", "illusion"],
+        "aiText": "If the senses deceive us, then true knowledge cannot come from looking or touching. It must come from the mind alone. Do you agree?",
+        "nextState": "knowledge_senses_challenge"
+      },
+      {
+        "match": ["knowledge", "truth", "real", "trust"],
+        "aiText": "You trust them? But if a sick man eats honey, it tastes bitter. To the healthy man, it is sweet. Which sensation is the 'true' knowledge?",
+        "nextState": "knowledge_senses_challenge"
+      }
+    ]
   },
   "knowledge_senses_challenge": {
     "aiText": "If the senses deceive, then Knowledge must be found in the mind alone. Is mathematics the only true knowledge because it does not rely on the eyes?",
@@ -156,10 +230,26 @@
       }
     ]
   },
-
   "generic_contradiction_check": {
     "aiText": "You seem to have reached a contradiction. You say one thing, but your previous answers imply another. Which of your two statements would you like to withdraw?",
-    "nextState": "refinement_loop"
+    "nextState": "refinement_loop",
+    "keywords": [
+      {
+        "match": ["first", "1st", "former", "start"],
+        "aiText": "Very well. Let us discard the first idea and examine the second more closely.",
+        "nextState": "refinement_loop"
+      },
+      {
+        "match": ["second", "2nd", "latter", "last"],
+        "aiText": "Wise. The second statement led us into a trap. Let us return to your original definition.",
+        "nextState": "definition_query"
+      },
+      {
+        "match": ["both", "all", "neither"],
+        "aiText": "A clean slate. Tabula rasa. Then tell me again, from the beginning: what is this concept?",
+        "nextState": "initial_belief"
+      }
+    ]
   },
   "generic_clarification": {
     "aiText": "Your answer is subtle, but I am a simple man. Can you rephrase that in terms a child could understand? What is the essential quality you are describing?",
@@ -167,6 +257,18 @@
   },
   "universal_truth_check": {
     "aiText": "We have made progress. We have stripped away the exceptions and the contradictions. But are we left with the Truth, or merely a shadow of it? I leave you with this: The unexamined life is not worth living. Shall we continue?",
-    "nextState": "greeting"
+    "nextState": "greeting",
+    "keywords": [
+      {
+        "match": ["yes", "continue", "sure", "please"],
+        "aiText": "Excellent. Let us find another belief to test. What else do you hold to be true?",
+        "nextState": "initial_belief"
+      },
+      {
+        "match": ["no", "stop", "tired", "done"],
+        "aiText": "Rest then. The mind, like the body, needs recovery. Farewell, friend.",
+        "nextState": "greeting"
+      }
+    ]
   }
 }

@@ -31,10 +31,12 @@
   --color-bg-input: #2C2C2C;
   
   --color-text-main: #E0E0E0;     /* Off-White */
-  --color-text-sub: #AAAAAA;
+  --color-text-sub: #D0D0D0;
   
   --border-color: #333333;
   --shadow-color: rgba(0,0,0,0.4);
+  --color-olive: #AEC878;
+  --color-gold: #DNC878;
 }
 
 /* --- Text Size Scaling --- */
